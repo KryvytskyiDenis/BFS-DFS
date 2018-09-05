@@ -1,0 +1,104 @@
+BFS algorithm implementation using adjency matrix of undirected graph.
+Vertices	BFS-index	Queue
+1		1		1
+2		2		1 2 
+5		3		1 2 5 
+-		-		2 5 
+3		4		2 5 3 
+4		5		2 5 3 4 
+-		-		5 3 4 
+-		-		3 4 
+-		-		4 
+-		-		
+______________________________________
+DFS algorithm implementation using adjency matrix of undirected graph.
+Vertices		DFS-index	Stack
+1		1		1
+2		2		1 2 
+3		3		1 2 3 
+-		-		1 2 
+4		4		1 2 4 
+5		5		1 2 4 5 
+-		-		1 2 4 
+-		-		1 2 
+-		-		1 
+-		-		
+_________________________________
+BFS algorithm implementation using adjency matrix of directed graph.
+Vertices	BFS-index	Queue
+1		1		1
+2		2		1 2 
+5		3		1 2 5 
+-		-		2 5 
+3		4		2 5 3 
+-		-		5 3 
+4		5		5 3 4 
+-		-		3 4 
+-		-		4 
+-		-		
+______________________________________
+DFS algorithm implementation using adjency matrix of directed graph.
+Vertices		DFS-index	Stack
+1		1		1
+2		2		1 2 
+3		3		1 2 3 
+4		4		1 2 3 4 
+5		5		1 2 3 4 5 
+-		-		1 2 3 4 
+-		-		1 2 3 
+-		-		1 2 
+-		-		1 
+-		-		
+_________________________________
+BFS algorithm implementation using incidence matrix of directed graph.
+Vertices	BFS-index	Queue
+2		1		1
+2		2		1 2 
+5		3		1 2 5 
+-		-		2 5 
+3		4		2 5 3 
+4		5		2 5 3 4 
+-		-		5 3 4 
+-		-		3 4 
+-		-		4 
+-		-		
+_________________________________
+DFS algorithm using incidence matrix of directed graph.
+Vertices		DFS-index	Stack
+1		1		1
+2		2		1 2 
+3		3		1 2 3 
+5		4		1 2 3 5 
+4		5		1 2 3 5 4 
+-		-		1 2 3 5 
+-		-		1 2 3 
+-		-		1 2 
+-		-		1 
+-		-		
+_________________________________
+BFS algorithm implementation using adjency matrix of weighted graph.
+Vertices	BFS-index	Queue
+1		1		1
+5		2		1 5 
+-		-		5 
+2		3		5 2 
+4		4		5 2 4 
+-		-		2 4 
+3		5		2 4 3 
+-		-		4 3 
+-		-		3 
+-		-		
+______________________________________
+DFS algorithm implementation using adjency matrix of weighted graph.
+Vertices		DFS-index	Stack
+1		1		1
+5		2		1 5 
+2		3		1 5 2 
+3		4		1 5 2 3 
+-		-		1 5 2 
+-		-		1 5 
+4		5		1 5 4 
+-		-		1 5 
+-		-		1 
+-		-		
+_________________________________
