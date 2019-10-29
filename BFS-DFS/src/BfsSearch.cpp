@@ -10,10 +10,7 @@ BFS_Search::BFS_Search()
 {}
 
 BFS_Search::~BFS_Search()
-{
-	ClearQueue();
-	ClearList();
-}
+{}
 
 void BFS_Search::AdjencyMatrix(Graph& graph, FileIO& fileIO, std::string graphType)
 {
@@ -166,18 +163,27 @@ void BFS_Search::Clear()
 
 void BFS_Search::ClearQueue()
 {
-	std::queue<int> empty;
-	std::swap(m_Queue, empty);
+	if (!m_Queue.empty())
+	{
+		std::queue<int> empty;
+		std::swap(m_Queue, empty);
+	}
 }
 
 void BFS_Search::ClearList()
 {
-	std::list<int> empty;
-	std::swap(m_VerticesList, empty);
+	if (m_VerticesList.empty())
+	{
+		std::list<int> empty;
+		std::swap(m_VerticesList, empty);
+	}
 }
 
 void BFS_Search::ClearBfsIndexMap()
 {
-	std::map<int, bool> empty;
-	std::swap(m_BfsIndexMap, empty);
+	if (m_BfsIndexMap.empty())
+	{
+		std::map<int, bool> empty;
+		std::swap(m_BfsIndexMap, empty);
+	}
 }

@@ -10,11 +10,7 @@ DFS_Search::DFS_Search()
 {}
 
 DFS_Search::~DFS_Search()
-{
-	ClearStack();
-	ClearList();
-	ClearDfsIndexMap();
-}
+{}
 
 void DFS_Search::AdjencyMatrix(Graph& graph, FileIO& fileIO, std::string graphType)
 {
@@ -198,18 +194,27 @@ void DFS_Search::Clear()
 
 void DFS_Search::ClearStack()
 {
-	std::stack<int> empty;
-	std::swap(m_Stack, empty);
+	if (!m_Stack.empty())
+	{
+		std::stack<int> empty;
+		std::swap(m_Stack, empty);
+	}
 }
 
 void DFS_Search::ClearList()
 {
-	std::list<int> empty;
-	std::swap(m_VerticesList, empty);
+	if (!m_VerticesList.empty())
+	{
+		std::list<int> empty;
+		std::swap(m_VerticesList, empty);
+	}
 }
 
 void DFS_Search::ClearDfsIndexMap()
 {
-	std::map<int, bool> empty;
-	std::swap(m_DfsIndexMap, empty);
+	if (!m_DfsIndexMap.empty())
+	{
+		std::map<int, bool> empty;
+		std::swap(m_DfsIndexMap, empty);
+	}
 }

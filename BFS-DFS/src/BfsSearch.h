@@ -13,7 +13,7 @@ class BFS_Search
 {
 private:
 	int m_BfsIndex;
-	std::queue <int> m_Queue;
+	std::queue<int> m_Queue;
 	std::list<int> m_VerticesList;
 	std::map<int, bool> m_BfsIndexMap;
 public:

@@ -2,7 +2,8 @@
 #include <iostream>
 
 Graph::Graph(std::ifstream& input)
-	:m_VerticesCount(0)
+	:m_VerticesCount(0),
+	m_GraphMatrix()
 {
 	input >> m_VerticesCount;
 	input >> m_EdgesCount;
@@ -10,12 +11,15 @@ Graph::Graph(std::ifstream& input)
 
 Graph::~Graph()
 {
-	for (int i = 0; i < m_VerticesCount; i++)
+	if (m_GraphMatrix != nullptr)
 	{
-		delete[] m_GraphMatrix[i];
-	}
+		for (int i = 0; i < m_VerticesCount; i++)
+		{
+			delete[] m_GraphMatrix[i];
+		}
 
-	delete[] m_GraphMatrix;
+		delete[] m_GraphMatrix;
+	}
 }
 
 void Graph::PushToVisited(const unsigned int& index, const bool& value)
