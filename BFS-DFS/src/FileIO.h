@@ -12,10 +12,11 @@ private:
 	std::ifstream m_Input;
 	std::ofstream m_Output;
 public:
+
 	FileIO() {};
 	FileIO(const std::string& ifp, const std::string& ofp);
 	~FileIO();
-	
+
 	void InputOpen();
 	void InputOpen(const std::string& ifp);
 

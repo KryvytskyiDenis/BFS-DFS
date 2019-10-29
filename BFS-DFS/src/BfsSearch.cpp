@@ -40,8 +40,8 @@ void BFS_Search::AdjencyMatrix(Graph& graph, FileIO& fileIO, std::string graphTy
 	// BFS implementation
 	std::cout << "Search steps:" << std::endl;
 	m_VerticesList.push_back(startVertex + 1);
-	fileIO.GetOutputStream() << "BFS algorithm implementation using adjency matrix of " << graphType << " graph.";
-	fileIO.GetOutputStream() << "\nVertices" << "\t" << "BFS-index" << "\t" << "Queue" << std::endl;
+	fileIO.GetOutputStream() << "BFS algorithm implementation using adjency matrix of " << graphType << " graph." << std::endl;
+	fileIO.GetOutputStream() << "Vertices" << "\t" << "BFS-index" << "\t" << "Queue" << std::endl;
 	fileIO.GetOutputStream() << startVertex + 1 << "\t\t" << m_BfsIndex << "\t\t" << m_VerticesList.front() << std::endl;
 
 	while (!m_Queue.empty())
@@ -75,15 +75,17 @@ void BFS_Search::AdjencyMatrix(Graph& graph, FileIO& fileIO, std::string graphTy
 		copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
 		fileIO.GetOutputStream() << std::endl;
 	}
-	fileIO.GetOutputStream() << "______________________________________\n";
+	fileIO.GetOutputStream() << "______________________________________" << std::endl;
 	fileIO.GetOutputStream().close();
 }
 
-void BFS_Search::IncidenceMatrix(Graph & graph, FileIO & fileIO, std::string graphType)
+void BFS_Search::IncidenceMatrix(Graph& graph, FileIO& fileIO, std::string graphType)
 {
-	
+
 	std::cout << "\n\n________________________" << std::endl;
 	std::cout << "BFS algorithm implementation using incidence matrix of " << graphType << " graph." << std::endl;
+
+	std::cout << "Enter start vertex: ";
 
 	int startVertex;
 	std::cin >> startVertex;
@@ -92,17 +94,17 @@ void BFS_Search::IncidenceMatrix(Graph & graph, FileIO & fileIO, std::string gra
 	fileIO.OutputOpen("res/textfiles/output.txt", std::ios::app);
 
 	graph.DisplayMatrix("edge");
-								 
+
 	// BFS indices
-	m_BfsIndexMap[startVertex] = 1; 
-								 
+	m_BfsIndexMap[startVertex] = 1;
+
 	m_Queue.push(startVertex);
-								 
+
 	// BFS implementation
 	std::cout << "Search steps:" << std::endl;
 	m_VerticesList.push_back(++startVertex);
-	fileIO.GetOutputStream() << "BFS algorithm implementation using incidence matrix of " << graphType << " graph.";
-	fileIO.GetOutputStream() << "\nVertices" << "\t" << "BFS-index" << "\t" << "Queue" << std::endl;
+	fileIO.GetOutputStream() << "BFS algorithm implementation using incidence matrix of " << graphType << " graph." << std::endl;
+	fileIO.GetOutputStream() << "Vertices" << "\t" << "BFS-index" << "\t" << "Queue" << std::endl;
 	fileIO.GetOutputStream() << startVertex + 1 << "\t\t" << m_BfsIndex << "\t\t" << m_VerticesList.front() << std::endl;
 	while (!m_Queue.empty())
 	{
@@ -117,7 +119,7 @@ void BFS_Search::IncidenceMatrix(Graph & graph, FileIO & fileIO, std::string gra
 				if (!graph.IsElementVisited(i))
 				{
 					// Denote the edge i as visited
-					graph.PushToVisited(i ,true); 
+					graph.PushToVisited(i, true);
 					for (int j = 0; j < graph.GetVerticesCount(); j++)
 					{
 						if ((graph.GetVertexFromMatrix(j, i)) && (!m_BfsIndexMap[j]))

@@ -32,7 +32,7 @@ void FileIO::OutputOpen(const std::string& ofp)
 	m_Output.open(ofp);
 }
 
-void FileIO::OutputOpen(const std::string & ofp, const unsigned int& mode)
+void FileIO::OutputOpen(const std::string& ofp, const unsigned int& mode)
 {
 	m_OutputFilePath = ofp;
 	m_Output.open(ofp, mode);

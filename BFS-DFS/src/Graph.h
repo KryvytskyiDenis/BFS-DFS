@@ -4,16 +4,16 @@
 #include <fstream>
 
 // Graph types
-static enum GraphTypesEnum { undirected, directed, weighted }; 
+static enum class GraphTypesEnum { undirected, directed, weighted };
 
 static std::map<GraphTypesEnum, std::string> graphTypes = {
-	{ undirected, "undirected" },
-	{ directed, "directed" },
-	{ weighted, "weighted" }
+	{ GraphTypesEnum::undirected, "undirected" },
+	{ GraphTypesEnum::directed, "directed" },
+	{ GraphTypesEnum::weighted, "weighted" }
 };
 
-/* 
- * Class which contain all information about every graph for searches
+/*
+ * Class which contains all the information about every graph for searches
  */
 class Graph {
 private:
@@ -21,16 +21,15 @@ private:
 	int m_EdgesCount; // edges
 	int** m_GraphMatrix;
 
-	/* 
-	* 0 - unvisited, 1 - visited element 
+	/*
+	* 0 - unvisited, 1 - visited element
 	* Element - vertex or edge depending on the matrix
 	*/
-	std::map<int, bool> m_VisitedElements; 
+	std::map<int, bool> m_VisitedElements;
 public:
 	Graph(std::ifstream& input);
 	~Graph();
 
-	
 	void PushToVisited(const unsigned int& index, const bool& value);
 	void SetGraphMatrix(std::ifstream& input, const std::string& mode);
 	void DisplayMatrix(const std::string& mode) const;
@@ -40,7 +39,7 @@ public:
 	void ClearVisitedElementMap();
 
 	inline int GetVertexFromMatrix(const unsigned int& row, const unsigned column) { return m_GraphMatrix[row][column]; }
-	inline int IsElementVisited(const unsigned int& index)  { return m_VisitedElements[index]; }
+	inline int IsElementVisited(const unsigned int& index) { return m_VisitedElements[index]; }
 	inline int GetVerticesCount() { return m_VerticesCount; }
 	inline int GetEdgesCount() { return m_EdgesCount; }
 };

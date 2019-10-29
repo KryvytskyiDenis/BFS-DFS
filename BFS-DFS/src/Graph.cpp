@@ -10,7 +10,12 @@ Graph::Graph(std::ifstream& input)
 
 Graph::~Graph()
 {
-	Clear();
+	for (int i = 0; i < m_VerticesCount; i++)
+	{
+		delete[] m_GraphMatrix[i];
+	}
+
+	delete[] m_GraphMatrix;
 }
 
 void Graph::PushToVisited(const unsigned int& index, const bool& value)
@@ -20,10 +25,11 @@ void Graph::PushToVisited(const unsigned int& index, const bool& value)
 
 void Graph::SetGraphMatrix(std::ifstream& input, const std::string& mode)
 {
-	m_GraphMatrix = new int *[m_VerticesCount];
+	m_GraphMatrix = new int* [m_VerticesCount];
 
 	for (int i = 0; i < m_VerticesCount; i++)
 		m_GraphMatrix[i] = new int[m_VerticesCount];
+
 
 	const unsigned int elementCount = (mode == "vertex") ? m_VerticesCount : m_EdgesCount;
 
@@ -36,7 +42,7 @@ void Graph::SetGraphMatrix(std::ifstream& input, const std::string& mode)
 
 void Graph::DisplayMatrix(const std::string& mode) const
 {
-	if(mode == "vertex")
+	if (mode == "vertex")
 		std::cout << "   v1 v2 v3 v4 v5";
 	else
 		std::cout << " e1 e2 e3 e4 e5 e6 e7";

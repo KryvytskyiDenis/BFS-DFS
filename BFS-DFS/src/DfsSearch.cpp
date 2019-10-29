@@ -16,9 +16,8 @@ DFS_Search::~DFS_Search()
 	ClearDfsIndexMap();
 }
 
-void DFS_Search::AdjencyMatrix(Graph & graph, FileIO & fileIO, std::string graphType)
+void DFS_Search::AdjencyMatrix(Graph& graph, FileIO& fileIO, std::string graphType)
 {
-	
 	std::cout << "\n\n________________________" << std::endl;
 	std::cout << "DFS algorithm implementation using adjency matrix of " << graphType << " graph." << std::endl;
 	std::cout << "Enter start vertex: ";
@@ -38,11 +37,13 @@ void DFS_Search::AdjencyMatrix(Graph & graph, FileIO & fileIO, std::string graph
 	graph.ClearVisitedElementMap();
 	graph.PushToVisited(startVertex, 1);
 
-	std::cout << "\tSearch steps:\n";
+	std::cout << "\tSearch steps:" << std::endl;
 	m_VerticesList.push_back(startVertex + 1);
-	fileIO.GetOutputStream() << "DFS algorithm implementation using adjency matrix of " << graphType << " graph.";
-	fileIO.GetOutputStream() << "\nVertices" << "\t\t" << "DFS-index" << "\t" << "Stack" << std::endl;
+
+	fileIO.GetOutputStream() << "DFS algorithm implementation using adjency matrix of " << graphType << " graph." << std::endl;
+	fileIO.GetOutputStream() << "Vertices" << "\t\t" << "DFS-index" << "\t" << "Stack" << std::endl;
 	fileIO.GetOutputStream() << startVertex + 1 << "\t\t" << m_DfsIndex << "\t\t" << m_VerticesList.front() << std::endl;
+
 	while (!m_Stack.empty())
 	{
 		int v1 = m_Stack.top();
@@ -69,7 +70,7 @@ void DFS_Search::AdjencyMatrix(Graph & graph, FileIO & fileIO, std::string graph
 				else if ((m_DfsIndexMap[i]) && (i == (graph.GetVerticesCount() - 1)))
 				{
 					m_Stack.pop();
-					std::cout << "vertex " << v1 + 1 << " was deleted from stack.\n";
+					std::cout << "vertex " << v1 + 1 << " was deleted from stack." << std::endl;
 					fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
 					m_VerticesList.pop_back();
 					copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
@@ -85,7 +86,7 @@ void DFS_Search::AdjencyMatrix(Graph & graph, FileIO & fileIO, std::string graph
 			}
 			else if (i == (graph.GetVerticesCount() - 1)) {
 				m_Stack.pop();
-				std::cout << "vertex " << v1 + 1 << " was deleted from stack.\n";
+				std::cout << "vertex " << v1 + 1 << " was deleted from stack." << std::endl;
 				fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
 				m_VerticesList.pop_back();
 				copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
@@ -94,91 +95,97 @@ void DFS_Search::AdjencyMatrix(Graph & graph, FileIO & fileIO, std::string graph
 			}
 		}
 	}
-	fileIO.GetOutputStream() << "_________________________________\n";
+	fileIO.GetOutputStream() << "_________________________________" << std::endl;
 	fileIO.GetOutputStream().close();
 }
 
-void DFS_Search::IncidenceMatrix(Graph & graph, FileIO & fileIO, std::string graphType)
+void DFS_Search::IncidenceMatrix(Graph& graph, FileIO& fileIO, std::string graphType)
 {
-		std::cout << "\n\n________________________\nDFS algorithm implementation using incidence matrix of " << graphType << " graph." << std::endl;
-		std::cout << "Enter start vertex: ";
+	std::cout << "\n\n________________________\nDFS algorithm implementation using incidence matrix of " << graphType << " graph." << std::endl;
+	std::cout << "Enter start vertex: ";
 
-		int startVertex;
-		std::cin >> startVertex;
-		startVertex--;
+	int startVertex;
+	std::cin >> startVertex;
+	startVertex--;
 
-		// Display the matrix on the screen
-		graph.DisplayMatrix("edge");
-	
-		fileIO.OutputOpen("res/textFiles/output.txt", std::ios::app);
+	// Display the matrix on the screen
+	graph.DisplayMatrix("edge");
 
-		m_Stack.push(startVertex);
-		graph.PushToVisited(startVertex, 1);
+	fileIO.OutputOpen("res/textFiles/output.txt", std::ios::app);
 
-		std::cout << "\Search steps:\n";
-		m_VerticesList.push_back(startVertex + 1);
-		fileIO.GetOutputStream() << "DFS algorithm using incidence matrix of " << graphType << " graph.";
-		fileIO.GetOutputStream() << "\nVertices" << "\t\t" << "DFS-index" << "\t" << "Stack" << std::endl;
-		fileIO.GetOutputStream() << startVertex + 1 << "\t\t" << m_DfsIndex << "\t\t" << m_VerticesList.front() << std::endl;
-	
-		while (!m_Stack.empty())
+	m_Stack.push(startVertex);
+	graph.PushToVisited(startVertex, 1);
+
+	std::cout << "\Search steps:\n";
+	m_VerticesList.push_back(startVertex + 1);
+	fileIO.GetOutputStream() << "DFS algorithm using incidence matrix of " << graphType << " graph." << std::endl;
+	fileIO.GetOutputStream() << "Vertices" << "\t\t" << "DFS-index" << "\t" << "Stack" << std::endl;
+	fileIO.GetOutputStream() << startVertex + 1 << "\t\t" << m_DfsIndex << "\t\t" << m_VerticesList.front() << std::endl;
+
+	while (!m_Stack.empty())
+	{
+		bool goToNextVertex = false;
+
+		int v1 = m_Stack.top();
+		for (int i = 0; i < graph.GetEdgesCount(); i++)
 		{
-		stop:
-			int v1 = m_Stack.top();
-			for (int i = 0; i < graph.GetEdgesCount(); i++)
+			// Check all edges along which we can get to some vertex
+			if (graph.GetVertexFromMatrix(v1, i))
 			{
-				// Check all edges along which we can get to some vertex
-				if (graph.GetVertexFromMatrix(v1, i))
+				for (int j = 0; j < graph.GetVerticesCount(); j++)
 				{
-					for (int j = 0; j < graph.GetVerticesCount(); j++)
+					// If the vertex wasn't visited, visit it
+					if ((graph.GetVertexFromMatrix(j, i)) && (!m_VisitedEdges[i]) && (!graph.IsElementVisited(j)))
 					{
-						// If the vertex wasn't visited, visit it
-						if ((graph.GetVertexFromMatrix(j, i)) && (!m_VisitedEdges[i]) && (!graph.IsElementVisited(j)))
-						{
-							graph.PushToVisited(j, true); // denote the vertex as visited
-							m_VisitedEdges[i] = true;     // denote the edge as visited 
-							m_Stack.push(j);
-							m_VerticesList.push_back(j + 1);
-							std::cout << v1 + 1 << " -> " << j + 1 << std::endl;
-							std::cout << "edge " << v1 + 1 << "-" << j + 1 << " was visited!\n";
-							m_DfsIndex++;
-							fileIO.GetOutputStream() << j + 1 << "\t\t" << m_DfsIndex << "\t\t";
-							copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
-							fileIO.GetOutputStream() << std::endl;
-							// If edge was visited, go to the next vertex (the end of the edge v1-j);
-							goto stop;
-						}
-						else if ((graph.GetVertexFromMatrix(j, i)) && (m_DfsIndexMap[j]) && (i == (graph.GetEdgesCount() - 1)))
-						{
-							m_Stack.pop();
-							std::cout << "vertex " << v1 + 1 << " was deleted from stack." << std::endl;
-							fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
-							m_VerticesList.pop_back();
-							copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
-							fileIO.GetOutputStream() << std::endl;
-							break;
-						}
-						else if ((graph.GetVertexFromMatrix(j, i)) && (!m_DfsIndexMap[j]) && (v1 != j))
-						{
-							std::cout << v1 + 1 << " ----> " << j + 1 << std::endl;
-							m_DfsIndexMap[j] = true;
-							continue;
-						}
+						graph.PushToVisited(j, true); // denote the vertex as visited
+						m_VisitedEdges[i] = true;     // denote the edge as visited 
+						m_Stack.push(j);
+						m_VerticesList.push_back(j + 1);
+						std::cout << v1 + 1 << " -> " << j + 1 << std::endl;
+						std::cout << "edge " << v1 + 1 << "-" << j + 1 << " was visited!\n";
+						m_DfsIndex++;
+						fileIO.GetOutputStream() << j + 1 << "\t\t" << m_DfsIndex << "\t\t";
+						copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
+						fileIO.GetOutputStream() << std::endl;
+						// If edge was visited, go to the next vertex (the end of the edge v1-j);
+						goToNextVertex = true;
+						break;
+					}
+					else if ((graph.GetVertexFromMatrix(j, i)) && (m_DfsIndexMap[j]) && (i == (graph.GetEdgesCount() - 1)))
+					{
+						m_Stack.pop();
+						std::cout << "vertex " << v1 + 1 << " was deleted from stack." << std::endl;
+						fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
+						m_VerticesList.pop_back();
+						copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
+						fileIO.GetOutputStream() << std::endl;
+						break;
+					}
+					else if ((graph.GetVertexFromMatrix(j, i)) && (!m_DfsIndexMap[j]) && (v1 != j))
+					{
+						std::cout << v1 + 1 << " ----> " << j + 1 << std::endl;
+						m_DfsIndexMap[j] = true;
+						continue;
 					}
 				}
-				else if (i == (graph.GetEdgesCount() - 1)) {
-					m_Stack.pop();
-					std::cout << "vertex " << v1 + 1 << " was deleted from stack" << std::endl;
-					fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
-					m_VerticesList.pop_back();
-					copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
-					fileIO.GetOutputStream() << std::endl;
+				if (goToNextVertex)
+				{
 					break;
 				}
 			}
+			else if (i == (graph.GetEdgesCount() - 1)) {
+				m_Stack.pop();
+				std::cout << "vertex " << v1 + 1 << " was deleted from stack" << std::endl;
+				fileIO.GetOutputStream() << "-" << "\t\t" << "-" << "\t\t";
+				m_VerticesList.pop_back();
+				copy(m_VerticesList.begin(), m_VerticesList.end(), std::ostream_iterator<int>(fileIO.GetOutputStream(), " "));
+				fileIO.GetOutputStream() << std::endl;
+				break;
+			}
 		}
-		fileIO.GetOutputStream() << "_________________________________\n";
-		fileIO.GetOutputStream().close();
+	}
+	fileIO.GetOutputStream() << "_________________________________" << std::endl;
+	fileIO.GetOutputStream().close();
 }
 
 void DFS_Search::Clear()
@@ -206,5 +213,3 @@ void DFS_Search::ClearDfsIndexMap()
 	std::map<int, bool> empty;
 	std::swap(m_DfsIndexMap, empty);
 }
-
-

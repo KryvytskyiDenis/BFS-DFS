@@ -15,7 +15,7 @@ private:
 	int m_DfsIndex;
 	std::stack <int> m_Stack;
 	std::list<int> m_VerticesList;
-	std::map<int, bool> m_DfsIndexMap; // 0 - непосещенная, 1 - посещенная
+	std::map<int, bool> m_DfsIndexMap; // 0 - unvisited, 1 - visited
 	std::map<int, bool> m_VisitedEdges;
 public:
 	DFS_Search();
